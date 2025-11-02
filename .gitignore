@@ -1,0 +1,54 @@
+# Model checkpoints and weights
+checkpoints/
+ckpts/
+*.pth
+*.safetensors
+*.ckpt
+*.bin
+
+# Generated outputs
+outputs/
+logs/
+*.png
+*.jpg
+*.jpeg
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg-info/
+dist/
+build/
+
+# Environment and secrets
+.env
+*.env
+HF_TOKEN_SETUP.md
+*token*
+*secret*
+
+# Large data files
+prompts.txt
+
+# Temporary files
+*.tmp
+*.log
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+.vscode/*
+!.vscode/sftp.json
+
+# Cleanup script (only needed once)
+cleanup.sh

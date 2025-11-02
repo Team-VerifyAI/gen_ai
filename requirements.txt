@@ -1,0 +1,29 @@
+# HunyuanImage-2.1 Dependencies
+# Install from HunyuanImage-2.1 repository's requirements.txt
+# This file lists the key dependencies
+
+torch>=2.0.0
+torchvision
+einops
+transformers>=4.30.0
+diffusers>=0.27.0
+accelerate>=0.20.0
+safetensors>=0.3.1
+Pillow>=9.5.0
+numpy>=1.24.0
+scipy
+opencv-python
+tqdm
+omegaconf
+timm
+
+# Flash Attention (install separately)
+# pip install flash-attn==2.7.3 --no-build-isolation
+
+# HuggingFace CLI
+huggingface-hub>=0.16.0
+
+# FLUX dependencies (optional)
+# sentencepiece
+# protobuf
+# peft
