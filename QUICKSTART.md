@@ -2,35 +2,78 @@
 
 가장 빠르게 시작하는 방법 (HunyuanImage-2.1)
 
-## 1. 사전 준비 (5분)
+## 중요: 디렉토리 구조
+
+**gen_image는 HunyuanImage-2.1을 사전에 설치해야 작동합니다!**
+
+```
+/data/your_username/repos/
+├── HunyuanImage-2.1/     # 먼저 설치 필요 (모델 코드 + 173GB 체크포인트)
+└── gen_image/            # 이 저장소 (데이터셋 생성 스크립트)
+```
+
+---
+
+## 방법 1: 자동 설치 (가장 쉬움)
+
+### 1. gen_image 클론 및 설정 (5분)
 
 ```bash
-# 1. 저장소 클론
+cd /data/your_username/repos
+git clone https://github.com/your-username/gen_image.git
+cd gen_image
+
+# install_hunyuan.sh 경로 수정
+nano scripts/install_hunyuan.sh
+# 수정: REPOS_DIR, DATA_DIR, CONDA_DIR, HF_TOKEN, partition
+```
+
+### 2. 자동 설치 실행 (2-3시간)
+
+```bash
+# SLURM 환경
+sbatch scripts/install_hunyuan.sh
+
+# 또는 로컬 실행
+bash scripts/install_hunyuan.sh
+```
+
+이 스크립트가 자동으로:
+- HunyuanImage-2.1 클론
+- Conda 환경 생성
+- 의존성 설치
+- 모델 다운로드 (173GB)
+
+**→ 3단계로 바로 이동**
+
+---
+
+## 방법 2: 수동 설치
+
+### 1. 저장소 클론 (5분)
+
+```bash
 cd /data/your_username/repos
 git clone https://github.com/your-username/gen_image.git
 git clone https://github.com/Tencent-Hunyuan/HunyuanImage-2.1.git
+```
 
-# 2. Conda 환경 생성
+### 2. HunyuanImage-2.1 설치 (2-3시간)
+
+```bash
+# Conda 환경 생성
 conda create -n hunyuan python=3.10 -y
 conda activate hunyuan
 
-# 3. 의존성 설치 (HunyuanImage-2.1 디렉토리에서)
+# 의존성 설치
 cd HunyuanImage-2.1
 pip install -r requirements.txt
 pip install flash-attn==2.7.3 --no-build-isolation  # 10-20분 소요
-```
-
-## 2. 모델 다운로드 (1-2시간)
-
-```bash
-# HuggingFace 토큰 발급: https://huggingface.co/settings/tokens
-
-# 환경변수 설정
-export HF_HOME=/data/your_username/.cache/huggingface
-export HF_TOKEN=hf_your_token_here
 
 # 모델 다운로드 (173GB)
-cd /data/your_username/repos/HunyuanImage-2.1
+# HuggingFace 토큰 발급: https://huggingface.co/settings/tokens
+export HF_HOME=/data/your_username/.cache/huggingface
+export HF_TOKEN=hf_your_token_here
 huggingface-cli download tencent/HunyuanImage-2.1 --local-dir ./ckpts
 ```
 

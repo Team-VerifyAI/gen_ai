@@ -36,14 +36,69 @@
 
 ## 설치 가이드
 
-### 1. 저장소 클론
-```bash
-# 작업 디렉토리로 이동 (충분한 공간이 있는 경로)
-cd /data/your_username/repos  # 본인 경로로 수정
+**⚠️ 중요**: gen_image 스크립트는 HunyuanImage-2.1 또는 FLUX 저장소를 **사전에 설치**해야 작동합니다.
 
-# 이 저장소 클론
+### 디렉토리 구조 (최종 모습)
+```
+/data/your_username/repos/
+├── HunyuanImage-2.1/        # 필수: 모델 코드 + 체크포인트 (173GB)
+│   └── ckpts/                # 모델 파일들
+├── flux/                     # 선택: FLUX 모델
+└── gen_image/                # 이 저장소: 데이터셋 생성 스크립트
+    ├── scripts/
+    └── run_hunyuan.sh
+```
+
+gen_image 스크립트들이 HunyuanImage-2.1의 코드를 import하여 사용합니다.
+
+---
+
+## 설치 방법
+
+### 방법 A: 자동 설치 (추천)
+
+#### 1. gen_image 저장소 클론
+```bash
+cd /data/your_username/repos
 git clone https://github.com/your-username/gen_image.git
 cd gen_image
+```
+
+#### 2. install_hunyuan.sh 경로 수정
+```bash
+nano scripts/install_hunyuan.sh
+
+# 수정할 부분:
+# - REPOS_DIR="/data/YOUR_USERNAME/repos"
+# - DATA_DIR="/data/YOUR_USERNAME"
+# - CONDA_DIR="$DATA_DIR/anaconda3"  # or miniconda3
+# - export HF_TOKEN=YOUR_HF_TOKEN_HERE
+# - #SBATCH --partition=YOUR_GPU_PARTITION
+```
+
+#### 3. 자동 설치 실행
+```bash
+# SLURM 환경
+sbatch scripts/install_hunyuan.sh
+
+# 또는 로컬 실행
+bash scripts/install_hunyuan.sh
+```
+
+이 스크립트가 자동으로:
+- HunyuanImage-2.1 저장소 클론
+- Conda 환경 생성
+- 의존성 설치 (Flash Attention 포함)
+- 모델 다운로드 (173GB)
+
+---
+
+### 방법 B: 수동 설치
+
+#### 1. gen_image 저장소 클론
+```bash
+cd /data/your_username/repos
+git clone https://github.com/your-username/gen_image.git
 ```
 
 ### 2. HunyuanImage-2.1 설치 (추천)
